@@ -103,12 +103,19 @@ module Spree
           return unless images.present?
 
           images.each do |image_hsh|
-            variant.images.create!(
-              alt: image_hsh["title"],
-              attachment: URI.parse(URI.encode(image_hsh["url"].strip)),
-              position: image_hsh["position"]
-            )
-          end
+            file_uri = URI.parse(URI.encode(image_hsh["url"].strip))
+            file_name = File.basename(file_uri.to_s)
+
+            variant.images.where(
+              attachment_file_name: file_name
+            ).first_or_initialize do |image|
+
+              image.attachment = file_uri.to_s
+              # image.alt        = image_hsh["title"]
+              # image.position   = image_hsh["position"]
+              image.save!
+
+            end
         end
 
         # adding variants to the product based on the children hash

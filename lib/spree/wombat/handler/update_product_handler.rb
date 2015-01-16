@@ -10,7 +10,7 @@ module Spree
           variant = Variant.where(is_master: true, sku: params[:sku]).first
 
           if variant.nil? || variant.product.nil?
-            return response("Cannot find product with SKU #{params[:sku]}!", 500)
+            return response("Cannot find product with SKU #{params[:sku]}!", 404)
           end
 
           product = variant.product
