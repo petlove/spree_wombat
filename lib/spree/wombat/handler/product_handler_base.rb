@@ -107,14 +107,13 @@ module Spree
             file_name = File.basename(file_uri.to_s)
 
             variant.images.where(
-              attachment_file_name: file_name
+              attachment_file_name: file_name,
+              alt: image_hsh["title"]
             ).first_or_initialize do |image|
-
               image.attachment = file_uri.to_s
-              # image.alt        = image_hsh["title"]
-              # image.position   = image_hsh["position"]
+              image.alt        = image_hsh["title"]
+              image.position   = image_hsh["position"]
               image.save!
-
             end
           end
         end
