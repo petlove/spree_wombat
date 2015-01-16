@@ -116,6 +116,7 @@ module Spree
               image.save!
 
             end
+          end
         end
 
         # adding variants to the product based on the children hash
