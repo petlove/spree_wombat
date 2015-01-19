@@ -104,10 +104,9 @@ module Spree
 
           images.each do |image_hsh|
             file_uri = URI.parse(URI.encode(image_hsh["url"].strip))
-            file_name = File.basename(file_uri.to_s)
 
             variant.images.where(
-              attachment_file_name: file_name
+              attachment_source_url: file_uri.to_s
             ).first_or_initialize do |image|
               image.attachment = file_uri.to_s
               image.alt        = image_hsh["title"]
