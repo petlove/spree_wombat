@@ -105,13 +105,18 @@ module Spree
           images.each do |image_hsh|
             file_uri = URI.parse(URI.encode(image_hsh["url"].strip))
 
-            variant.images.where(
-              attachment_source_url: file_uri.to_s
-            ).first_or_initialize do |image|
-              image.attachment = file_uri.to_s
-              image.alt        = image_hsh["title"]
-              image.position   = image_hsh["position"]
-              image.save!
+            begin
+              variant.images.where(
+                attachment_source_url: file_uri.to_s
+              ).first_or_initialize do |image|
+                image.attachment = file_uri
+                image.alt        = image_hsh["title"]
+                image.position   = image_hsh["position"]
+                image.save!
+              end
+            rescue Exception => e
+              puts e.message
+              puts e.backtrace.delete_if { |l| l =~ /rails|gems/ }.join("\n")
             end
           end
         end
