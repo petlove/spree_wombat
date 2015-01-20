@@ -91,7 +91,7 @@ module Spree
           if taxon
             parent.children << taxon
           else
-            taxon = parent.children.create!(name: taxon_name, position: position)
+            taxon = parent.children.create!(name: taxon_name, position: position, taxonomy_id: parent.taxonomy_id)
           end
           parent.save
           # store the taxon so we can assign it later
@@ -103,6 +103,7 @@ module Spree
           return unless images.present?
 
           images.each do |image_hsh|
+            URI.parse(image_hsh["url"].strip)
             file_uri = URI.parse(URI.encode(image_hsh["url"].strip))
 
             begin
