@@ -103,7 +103,7 @@ module Spree
           return unless images.present?
 
           images.each do |image_hsh|
-            URI.parse(image_hsh["url"].strip)
+            # URI.parse(image_hsh["url"].strip)
             file_uri = URI.parse(URI.encode(image_hsh["url"].strip))
 
             begin
