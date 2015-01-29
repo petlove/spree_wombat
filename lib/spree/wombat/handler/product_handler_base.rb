@@ -134,13 +134,10 @@ module Spree
             child_product[:options] = option_type_values.collect {|k,v| {name: k, value: v} }
             child_product[:price] = price
 
-            variant = product.variants.unscoped.find_by_sku(child_product[:sku])
+            variant = Spree::Variant.unscoped.where(sku: child_product[:sku], product: product).first_or_initialize
 
-            if variant
-              variant.update_attributes(child_product)
-            else
-              variant = product.variants.create!({ product: product }.merge(child_product))
-            end
+            variant.update_attributes!(child_product)
+
             process_images(variant, images)
           end
         end
