@@ -155,7 +155,7 @@ module Spree
       describe ".process_images" do
 
         let(:variant) { create(:product).master }
-        let(:images) { message["product"]["images"]}
+        let(:images) { [{"url" => 'http://placehold.it/1000x1000', "position" => 0, "title" => 'test 1000x1000' }]}
 
         context "with empty images" do
           let(:images) {[]}
@@ -168,10 +168,10 @@ module Spree
         end
 
         context "with images with valid url" do
-          before do
-            img_fixture = File.open(File.expand_path('../../../../../fixtures/thinking-cat.jpg', __FILE__))
-            URI.stub(:parse).and_return img_fixture
-          end
+          # before do
+          #   img_fixture = File.open(File.expand_path('../../../../../fixtures/thinking-cat.jpg', __FILE__))
+          #   URI.stub(:parse).and_return img_fixture
+          # end
 
           it "will download the image and assign it" do
             expect{handler.process_images(variant,images)}.to change{Spree::Image.count}.by(1)
