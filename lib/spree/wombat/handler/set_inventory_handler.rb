@@ -19,6 +19,7 @@ module Spree
 
           count_on_hand = stock_item.count_on_hand
           stock_item.set_count_on_hand(@payload[:inventory][:quantity])
+          stock_item.touch
 
           return response("Set inventory for #{sku} at #{stock_location_name} from #{count_on_hand} to #{stock_item.reload.count_on_hand}")
         end
