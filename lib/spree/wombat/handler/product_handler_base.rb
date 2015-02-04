@@ -128,12 +128,11 @@ module Spree
             option_type_values = child_product.delete(:options)
             images = child_product.delete(:images)
             price = child_product[:price]
-            child_product = child_product.slice *Spree::Variant.attribute_names
+            child_product = child_product.slice(*Spree::Variant.attribute_names).except(:id, :product_id)
             child_product[:options] = option_type_values.collect {|k,v| {name: k, value: v} }
             child_product[:price] = price
 
             variant = Spree::Variant.unscoped.where(sku: child_product[:sku], product: product).first_or_initialize
-
             variant.update_attributes!(child_product)
 
             process_images(variant, images)
