@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pry'
 
 module Spree
   module Wombat
@@ -155,7 +156,8 @@ module Spree
       describe ".process_images" do
 
         let(:variant) { create(:product).master }
-        let(:images) { [{"url" => 'http://placehold.it/1000x1000', "position" => 0, "title" => 'test 1000x1000' }]}
+        # let(:images) { message["product"]["images"]}
+        let(:images) { [{"url" => 'http://placehold.it/1000x1000', "position" => 0, "title" => 'test 1000x1000' }] }
 
         context "with empty images" do
           let(:images) {[]}
@@ -172,6 +174,19 @@ module Spree
           #   img_fixture = File.open(File.expand_path('../../../../../fixtures/thinking-cat.jpg', __FILE__))
           #   URI.stub(:parse).and_return img_fixture
           # end
+
+          it "will download the image and assign it" do
+            expect{handler.process_images(variant,images)}.to change{Spree::Image.count}.by(1)
+          end
+        end
+
+        context "with 2 images with the same url" do
+          let(:images) {
+            [
+              {"url" => 'http://placehold.it/1000x1000', "position" => 0, "title" => 'test 1000x1000' },
+              {"url" => 'http://placehold.it/1000x1000', "position" => 1, "title" => 'test 2 1000x1000' }
+            ]
+          }
 
           it "will download the image and assign it" do
             expect{handler.process_images(variant,images)}.to change{Spree::Image.count}.by(1)
@@ -258,15 +273,16 @@ module Spree
       end
 
       describe "#process" do
-        before do
-          img_fixture = File.open(File.expand_path('../../../../../fixtures/thinking-cat.jpg', __FILE__))
-          URI.stub(:parse).and_return img_fixture
-        end
+        # before do
+        #   img_fixture = File.open(File.expand_path('../../../../../fixtures/thinking-cat.jpg', __FILE__))
+        #   URI.stub(:parse).and_return img_fixture
+        # end
 
         context "product without children" do
           let(:message) do
             hsh = ::Hub::Samples::Product.request
             hsh["product"].delete("variants")
+            hsh["product"]["images"] = [{"url" => 'http://placehold.it/1000x1000.jpg', "position" => 0, "title" => 'test 1000x1000' }]
             hsh
           end
           let(:handler) { Handler::AddProductHandler.new(message.to_json) }
@@ -315,7 +331,12 @@ module Spree
         end
 
         context "product with children" do
-          let(:message) {::Hub::Samples::Product.request}
+          let(:message) {
+            hsh = ::Hub::Samples::Product.request
+            hsh["product"]["images"] = [{"url" => 'http://placehold.it/1000x1000.jpg', "position" => 0, "title" => 'test 1000x1000' }]
+            hsh["product"]["variants"][0]["images"] = [{"url" => 'http://placehold.it/800x800.jpg', "position" => 0, "title" => 'test 800x800' }]
+            hsh
+          }
           let(:handler) { Handler::AddProductHandler.new(message.to_json) }
 
           it "will add variants to the product" do
@@ -346,6 +367,8 @@ module Spree
             let(:message) do
               msg = ::Hub::Samples::Product.request
               msg["product"].delete("options")
+              msg["product"]["images"] = [{"url" => 'http://placehold.it/1000x1000.jpg', "position" => 0, "title" => 'test 1000x1000' }]
+              msg["product"]["variants"][0]["images"] = [{"url" => 'http://placehold.it/800x800.jpg', "position" => 0, "title" => 'test 800x800' }]
               msg
             end
 

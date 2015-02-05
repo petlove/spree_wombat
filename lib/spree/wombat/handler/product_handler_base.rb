@@ -103,20 +103,15 @@ module Spree
           return unless images.present?
 
           images.each do |image_hsh|
-            # URI.parse(image_hsh["url"].strip)
-            file_uri = URI.parse(URI.encode(image_hsh["url"].strip))
+            file_uri = URI.parse(URI.escape(image_hsh["url"].strip))
 
-            begin
-              image = variant.images.where(attachment_source_url: file_uri.to_s).first_or_initialize do |img|
-                img.attachment = file_uri
-              end
-              image.alt        = image_hsh["title"]
-              image.position   = image_hsh["position"]
-              image.save!
-            rescue Exception => e
-              puts e.message
-              puts e.backtrace.delete_if { |l| l =~ /rails|gems/ }.join("\n")
+            image = variant.images.where(attachment_source_url: file_uri.to_s).first_or_initialize do |img|
+              img.attachment = file_uri.to_s
             end
+            image.alt        = image_hsh["title"]
+            image.position   = image_hsh["position"]
+            image.save!
+
           end
         end
 
