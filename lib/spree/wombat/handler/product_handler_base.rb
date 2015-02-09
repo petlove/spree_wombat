@@ -78,7 +78,7 @@ module Spree
             return unless taxons_path.present?
             taxonomy_name = taxons_path.shift
             taxonomy = Spree::Taxonomy.where(name: taxonomy_name).first_or_create
-            return response("Cannot find taxonomy with name #{taxonomy_name}!", 500) unless taxonomy
+            return response("Cannot find taxonomy's root for #{taxonomy_name}!", 500) unless taxonomy.root
             add_taxon(taxonomy.root, taxons_path)
           end
         end
