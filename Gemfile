@@ -10,7 +10,7 @@ gem 'mysql2'
 gem 'pg'
 
 group :test do
-  gem 'hub_samples', github: "petlove/hub_samples", branch: "price_sample"
+  gem 'hub_samples', github: "spree/hub_samples", branch: "master"
 
   platforms :ruby_19 do
     gem 'pry-debugger'
