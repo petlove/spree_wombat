@@ -11,11 +11,12 @@ module Spree
           let!(:variant) { create(:variant, :sku => 'SPREE-T-SHIRT', price: 12.0, cost_price: 5.0) }
 
           context "and the stock location name is equal to location in the message" do
-            it "will set the inventory to the supplied amount" do
+
+            it "will set the price to the supplied amount" do
               expect{handler.process}.to change{variant.reload.price.to_f}.from(12.0).to(12.95)
             end
 
-            it "will set the inventory to the supplied amount" do
+            it "will set the cost_price to the supplied amount" do
               expect{handler.process}.to change{variant.reload.cost_price.to_f}.from(5.0).to(6.25)
             end
 
