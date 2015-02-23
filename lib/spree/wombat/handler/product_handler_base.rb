@@ -109,7 +109,6 @@ module Spree
               img.attachment = file_uri.to_s
             end
             image.alt        = image_hsh["title"]
-            image.position   = image_hsh["position"]
             image.save!
 
           end
