@@ -10,7 +10,7 @@ module Spree
           return response("Stock location with name #{stock_location_name} was not found", 500) unless stock_location
 
           sku = @payload[:inventory][:product_id]
-          variant = Spree::Variant.find_by_sku(sku)
+          variant = Spree::Variant.unscoped.find_by(sku: sku)
           return response("Product with SKU #{sku} was not found", 500) unless variant
 
           stock_item = stock_location.stock_items.where(variant: variant).first
