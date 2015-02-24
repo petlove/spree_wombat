@@ -5,7 +5,7 @@ module Spree
         def process
           sku_id = @payload[:price].delete(:product_id)
           variant = Spree::Variant.find_by(vtex_sku_id: sku_id)
-          return response("Product with VTEX SKU ID #{sku} was not found", 500) unless variant
+          return response("Product with VTEX SKU ID #{sku_id} was not found", 500) unless variant
 
           updatable_columns = @payload[:price].slice *Spree::Variant.attribute_names.select{|n| n =~ /price/i }.concat(["price"])
           return response("Missing price information", 500) unless updatable_columns[:price]
