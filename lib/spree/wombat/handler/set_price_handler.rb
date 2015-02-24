@@ -4,7 +4,7 @@ module Spree
       class SetPriceHandler < Base
         def process
           sku = @payload[:price].delete(:product_id)
-          variant = Spree::Variant.find_by(vtex_sku_id: sku)
+          variant = Spree::Variant.unscoped.find_by(vtex_sku_id: sku)
           return response("Product with VTEX SKU ID #{sku} was not found", 500) unless variant
 
           updatable_columns = @payload[:price].slice *Spree::Variant.attribute_names.select{|n| n =~ /price/i }.concat(["price"])
