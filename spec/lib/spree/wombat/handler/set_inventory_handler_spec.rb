@@ -45,10 +45,23 @@ module Spree
 
         context "with stock item not present" do
           let!(:variant) { create(:variant, :sku => 'SPREE-T-SHIRT') }
-          it "returns a Hub::Responder with 500 status" do
-            responder = handler.process
-            expect(responder.summary).to eql "Stock location with name us_warehouse was not found"
-            expect(responder.code).to eql 500
+
+          context "with stock location present" do
+            let!(:stock_location) { create(:stock_location, name: 'us_warehouse')}
+            it "returns a Hub::Responder with 500 status" do
+              variant.stock_items.delete_all
+              responder = handler.process
+              expect(responder.summary).to eql "Stock location 'us_warehouse' does not have any stock_items for SPREE-T-SHIRT"
+              expect(responder.code).to eql 500
+            end
+          end
+
+          context "with stock location not present" do
+            it "returns a Hub::Responder with 500 status" do
+              responder = handler.process
+              expect(responder.summary).to eql "Stock location with name us_warehouse was not found"
+              expect(responder.code).to eql 500
+            end
           end
         end
 
