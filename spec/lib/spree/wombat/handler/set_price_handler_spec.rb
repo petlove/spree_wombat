@@ -8,7 +8,7 @@ module Spree
 
       describe "process" do
         context "with stock item present" do
-          let!(:variant) { create(:variant, :sku => 'SPREE-T-SHIRT', price: 12.0, cost_price: 5.0) }
+          let!(:variant) { create(:variant, :sku => 'SPREE-T-SHIRT', vtex_sku_id: 'SPREE-T-SHIRT', price: 12.0, cost_price: 5.0) }
 
           context "and the stock location name is equal to location in the message" do
 
@@ -31,7 +31,7 @@ module Spree
         context "with variant not present" do
           it "returns a Hub::Responder with 500 status" do
             responder = handler.process
-            expect(responder.summary).to eql "Product with SKU SPREE-T-SHIRT was not found"
+            expect(responder.summary).to eql "Product with VTEX SKU ID SPREE-T-SHIRT was not found"
             expect(responder.code).to eql 500
           end
         end
