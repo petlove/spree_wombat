@@ -22,7 +22,7 @@ module Spree
       end
 
       def cpf_or_cnpj
-        object.payments.last.security_number
+        object.payments.last.document_number
       end
 
       def status
