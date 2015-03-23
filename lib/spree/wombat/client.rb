@@ -41,6 +41,17 @@ module Spree
         object_count
       end
 
+      def self.push_item(class_name, id)
+        payload_builder = Spree::Wombat::Config[:payload_builder][class_name.to_s]
+        model_name = payload_builder[:model].present? ? payload_builder[:model] : class_name
+
+        object = model_name.constantize.find(id)
+
+        serializer = payload_builder[:serializer].constantize
+        payload = { payload_builder[:root] => [serializer.new(object, root: false)] }.to_json
+        push(payload)
+      end
+
       def self.push(json_payload)
         res = HTTParty.post(
                 Spree::Wombat::Config[:push_url],
