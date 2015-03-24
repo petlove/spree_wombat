@@ -5,7 +5,7 @@ module Spree
     class OrderSerializer < ActiveModel::Serializer
 
       attributes :id, :status, :channel, :email, :currency, :placed_on, :updated_at, :totals,
-        :adjustments, :guest_token, :shipping_instructions, :cpf_or_cnpj
+        :adjustments, :guest_token, :shipping_instructions, :cpf_or_cnpj, :paid
 
       has_many :line_items,  serializer: Spree::Wombat::LineItemSerializer
       has_many :payments, serializer: Spree::Wombat::PaymentSerializer
@@ -43,6 +43,10 @@ module Spree
         else
           ''
         end
+      end
+
+      def paid
+        object.payment_state == "paid"
       end
 
       def totals
