@@ -1,4 +1,4 @@
-# Spree Wombat
+# Spree Wombat ![Travis](https://api.travis-ci.org/petlove/spree_wombat.svg)
 
 Connect your SpreeCommerce Storefront to Wombat, providing push API and webhook handlers
 
