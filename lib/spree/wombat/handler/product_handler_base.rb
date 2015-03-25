@@ -105,12 +105,16 @@ module Spree
           images.each do |image_hsh|
             file_uri = URI.parse(URI.escape(image_hsh["url"].strip))
 
-            image = variant.images.where(attachment_source_url: file_uri.to_s).first_or_initialize do |img|
-              img.attachment = file_uri.to_s
+            begin
+              image = variant.images.where(attachment_source_url: file_uri.to_s).first_or_initialize do |img|
+                img.attachment = file_uri.to_s
+              end
+              image.alt        = image_hsh["title"]
+              image.save!
+            rescue OpenURI::HTTPError => e
+              puts "Can't access #{url}. #{e.message}"
+              next
             end
-            image.alt        = image_hsh["title"]
-            image.save!
-
           end
         end
 
