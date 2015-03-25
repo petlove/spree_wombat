@@ -112,7 +112,7 @@ module Spree
               image.alt        = image_hsh["title"]
               image.save!
             rescue OpenURI::HTTPError => e
-              puts "Can't access #{url}. #{e.message}"
+              puts "Can't access #{file_uri.to_s}. #{e.message}"
               next
             end
           end
