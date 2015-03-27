@@ -14,7 +14,7 @@ module Spree
        end
 
         it "raises an RecordNotFound exception" do
-          expect { Client.push_item(order.class.to_s, order.id  1) }.to raise_error(ActiveRecord::RecordNotFound)
+          expect { Client.push_item(order.class.to_s, order.id || 1) }.to raise_error(ActiveRecord::RecordNotFound)
         end
 
         it "returns true" do
