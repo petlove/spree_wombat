@@ -1,6 +1,5 @@
 require "spec_helper"
 
-
 describe Spree::Wombat::Client do
 
   let!(:order) { create(:shipped_order) }

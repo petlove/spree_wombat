@@ -3,7 +3,6 @@ require 'active_model/serializer'
 module Spree
   module Wombat
     class OrderSerializer < ActiveModel::Serializer
-
       attributes :id, :status, :channel, :email, :currency, :placed_on, :updated_at, :totals,
         :adjustments, :guest_token, :shipping_instructions, :cpf_or_cnpj, :paid
 
@@ -46,7 +45,7 @@ module Spree
       end
 
       def paid
-        object.payment_state == "paid"
+        object.payment_state == 'paid'
       end
 
       def totals
