@@ -45,13 +45,7 @@ module Spree
       end
 
       def paid
-        if object.payment_state = 'paid'
-          return true
-        elsif object.payments.first.credit_card? && object.payments.first.state == 'pending'
-          return true
-        else
-          return false
-        end
+        object.paid? || object.payments.first.credit_card? && object.payments.first.pending?
       end
 
       def totals
