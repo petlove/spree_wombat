@@ -4,7 +4,7 @@ module Spree
   module Wombat
     class OrderSerializer < ActiveModel::Serializer
       attributes :id, :status, :channel, :email, :currency, :placed_on, :updated_at, :totals,
-        :adjustments, :guest_token, :shipping_instructions, :cpf_or_cnpj, :paid
+        :adjustments, :guest_token, :shipping_instructions, :document_number, :paid
 
       has_many :line_items,  serializer: Spree::Wombat::LineItemSerializer
       has_many :payments, serializer: Spree::Wombat::PaymentSerializer
@@ -20,8 +20,8 @@ module Spree
         object.special_instructions
       end
 
-      def cpf_or_cnpj
-        object.payments.last.document_number
+      def document_number
+        object.document_number
       end
 
       def status
@@ -45,7 +45,7 @@ module Spree
       end
 
       def paid
-        object.paid? || object.payments.first.credit_card? && object.payments.first.pending?
+        object.paid?
       end
 
       def totals

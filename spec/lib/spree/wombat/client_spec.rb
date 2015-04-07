@@ -18,12 +18,12 @@ describe Spree::Wombat::Client do
     end
 
     it "raises an RecordNotFound exception" do
-      expect { described_class.push_item(order.class.to_s, 1) }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { described_class.push_item(order.class.to_s, order.id + 1) }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     it "returns true" do
       expect(HTTParty).to receive(:post).and_return(double(code: 202, body: "Success"))
-      expect(described_class.push_item(order.class.to_s, order.id)).to be true
+      expect(described_class.push_item(order.class.to_s, order.id)).to be nil
     end
   end
 
@@ -101,7 +101,7 @@ describe Spree::Wombat::Client do
   describe ".validate" do
     it "returns true" do
       response = double(code: 202, body: "Success")
-      expect(described_class.validate(response)).to be true
+      expect(described_class.validate(response)).to be nil
     end
 
     it "raises an exception" do
