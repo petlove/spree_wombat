@@ -14,12 +14,12 @@ module Spree
        end
 
         it "raises an RecordNotFound exception" do
-          expect { Client.push_item(order.class.to_s, order.id || 1) }.to raise_error(ActiveRecord::RecordNotFound)
+          expect { Client.push_item(order.class.to_s, order.id + 1) }.to raise_error(ActiveRecord::RecordNotFound)
         end
 
         it "returns true" do
           expect(HTTParty).to receive(:post).and_return(double(code: 202, body: "Success"))
-          expect(Client.push_item(order.class.to_s, order.id)).to be true
+          expect(Client.push_item(order.class.to_s, order.id)).to be nil
         end
       end
 
@@ -91,7 +91,7 @@ module Spree
       describe ".validate" do
         it "returns true" do
           response = double(code: 202, body: "Success")
-          expect(Client.validate(response)).to be true
+          expect(Client.validate(response)).to be nil
         end
 
         it "raises an exception" do
