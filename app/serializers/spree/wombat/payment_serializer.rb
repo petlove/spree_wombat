@@ -3,7 +3,7 @@ require 'active_model/serializer'
 module Spree
   module Wombat
     class PaymentSerializer < ActiveModel::Serializer
-      attributes :id, :number, :status, :amount, :payment_method
+      attributes :id, :number, :status, :amount, :payment_method, :url_referral, :billet_code
 
       has_one :source, serializer: Spree::Wombat::SourceSerializer
 
@@ -21,6 +21,14 @@ module Spree
 
       def amount
         object.amount.to_f
+      end
+
+      def url_referral
+        object.url_referral
+      end
+
+      def billet_code
+        object.billet_code
       end
     end
   end
