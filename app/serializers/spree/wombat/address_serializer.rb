@@ -4,7 +4,7 @@ module Spree
   module Wombat
     class AddressSerializer < ActiveModel::Serializer
       attributes :firstname, :lastname, :address1, :address2, :zipcode, :city,
-                 :state, :country, :phone, :neighborhood
+                 :state, :country, :phone, :house_number, :neighborhood
 
       def country
         object.country.try(:iso)
