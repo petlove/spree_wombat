@@ -4,7 +4,8 @@ module Spree
   module Wombat
     class OrderSerializer < ActiveModel::Serializer
       attributes :id, :status, :channel, :email, :currency, :placed_on, :updated_at, :totals,
-                 :adjustments, :guest_token, :shipping_instructions, :document_number, :paid
+                 :adjustments, :selected_shipping_rate, :guest_token, :shipping_instructions,
+                 :document_number, :paid
 
       has_many :line_items,  serializer: Spree::Wombat::LineItemSerializer
       has_many :payments, serializer: Spree::Wombat::PaymentSerializer
@@ -65,6 +66,11 @@ module Spree
           { name: 'tax', value: tax_total },
           { name: 'shipping', value: shipping_total }
         ]
+      end
+
+      def selected_shipping_rate
+        return nil if object.shipments.empty?
+        object.shipments.first.selected_shipping_rate
       end
 
       private
