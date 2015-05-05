@@ -35,7 +35,7 @@ module Spree
           @params = @params.slice *Spree::Product.attribute_names
           @params.delete(:id) # Reject ID as it should be set by database or else it could convert to 0 in postgresql.
           @params[:taxon_ids] = Spree::Taxon.where(id: @taxon_ids).leaves.pluck(:id) unless @taxons_list.nil?
-          @params[:price] = price
+          @params[:price] = price if price
           @params[:sku] = sku
           @params
         end
@@ -128,7 +128,7 @@ module Spree
             price = child_product[:price]
             child_product = child_product.slice(*Spree::Variant.attribute_names).except(:id, :product_id)
             child_product[:options] = option_type_values.collect {|k,v| {name: k, value: v} }
-            child_product[:price] = price
+            child_product[:price] = price if price
 
             variant = Spree::Variant.unscoped.where(sku: child_product[:sku], product: product).first_or_initialize
             variant.update_attributes!(child_product)
