@@ -10,6 +10,8 @@ module Spree
       has_many :line_items,  serializer: Spree::Wombat::LineItemSerializer
       has_many :payments, serializer: Spree::Wombat::PaymentSerializer
 
+      has_many :shipments, serializer: Spree::Wombat::ShipmentSerializer
+
       has_one :shipping_address, serializer: Spree::Wombat::AddressSerializer
       has_one :billing_address, serializer: Spree::Wombat::AddressSerializer
 
@@ -31,6 +33,11 @@ module Spree
 
       def channel
         object.channel || 'spree'
+      end
+
+      def sub_channel
+        # object.sub_channel || 'store'
+        'store'
       end
 
       def updated_at
