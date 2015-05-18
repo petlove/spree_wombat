@@ -4,7 +4,7 @@ module Spree
   module Wombat
     class ProductSerializer < ActiveModel::Serializer
 
-      attributes :id, :name, :sku, :description, :price, :cost_price,
+      attributes :id, :name, :sku, :description, :price, :list_price, :cost_price,
                  :available_on, :permalink, :meta_description, :meta_keywords,
                  :shipping_category, :taxons, :options, :weight, :height, :width,
                  :depth, :variants
@@ -13,6 +13,10 @@ module Spree
 
       def id
         object.sku
+      end
+
+      def list_price
+        object.list_price.to_f
       end
 
       def price
