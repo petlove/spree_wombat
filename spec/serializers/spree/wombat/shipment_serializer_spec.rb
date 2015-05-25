@@ -40,7 +40,7 @@ module Spree
 
       it "serializes the stock_location.name as stock_location" do
         expect(shipment.stock_location.name).to_not eql nil
-        expect(serialized_shipment["stock_location"]).to eql shipment.stock_location.name
+        expect(serialized_shipment["stock_location"]).to eql shipment.stock_location.slice(:name, :zipcode)
       end
 
       it "serializes the shipping_method.name as shipping_method" do

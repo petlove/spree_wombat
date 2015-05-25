@@ -9,7 +9,8 @@ module Spree
           return response("Order with number #{order_number} was not found", 500) unless order
           params = {
             state: @payload[:order][:status],
-            email: @payload[:order][:email]
+            email: @payload[:order][:email],
+            invoice: @payload[:order].to_h[:invoice]
           }
           order.update_attributes!(params)
           response "Updated Order with number #{order_number}"

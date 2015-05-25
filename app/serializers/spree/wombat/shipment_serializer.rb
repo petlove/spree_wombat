@@ -6,7 +6,7 @@ module Spree
       attributes :id, :order_id, :email, :cost, :status, :stock_location,
                 :shipping_method, :tracking, :placed_on, :shipped_at, :totals,
                 :updated_at, :channel, :items, :selected_shipping_rate,
-                :order_status, :order_payment_status, :order_paid
+                :order_status, :order_payment_status, :order_paid, :order_invoice
 
       has_one :bill_to, serializer: AddressSerializer, root: "billing_address"
       has_one :ship_to, serializer: AddressSerializer, root: "shipping_address"
@@ -47,8 +47,12 @@ module Spree
         object.order.paid?
       end
 
+      def order_invoice
+        object.order.invoice
+      end
+
       def stock_location
-        object.stock_location.name
+        object.stock_location.slice(:name, :zipcode)
       end
 
       def shipping_method
