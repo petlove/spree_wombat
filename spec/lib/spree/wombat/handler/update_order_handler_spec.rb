@@ -10,12 +10,13 @@ module Spree
         let(:handler) { Handler::UpdateOrderHandler.new(message.to_json) }
 
         context "for existing order" do
-          let!(:message) { ::Hub::Samples::Order.request }
+          let!(:message) { ::Hub::Samples::Order.request.merge(invoice: { key: '123456' }) }
           let!(:order) { create(:order_with_line_items, number: message["order"]["id"])}
 
           it "will update the order" do
             email = order.email
             state = order.state
+            invoice = order.invoice
 
             responder = handler.process
             expect(responder.summary).to  match /Updated Order with number R.{9}/
@@ -23,6 +24,7 @@ module Spree
 
             expect(order.reload.email).to eql message["order"]["email"]
             expect(order.reload.state).to eql message["order"]["status"]
+            expect(order.reload.invoice).to eql message["order"]["invoice"]
           end
 
         end

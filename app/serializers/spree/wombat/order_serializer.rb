@@ -35,7 +35,6 @@ module Spree
       end
 
       def sub_channel
-        # object.sub_channel || 'store'
         'store'
       end
 

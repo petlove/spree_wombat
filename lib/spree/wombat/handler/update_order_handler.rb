@@ -10,7 +10,7 @@ module Spree
           params = {
             state: @payload[:order][:status],
             email: @payload[:order][:email],
-            invoice: @payload[:order].to_h[:invoice]
+            invoice: @payload[:order][:invoice]
           }
           order.update_attributes!(params)
           response "Updated Order with number #{order_number}"
