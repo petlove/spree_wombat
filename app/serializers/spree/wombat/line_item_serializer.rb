@@ -4,7 +4,7 @@ module Spree
   module Wombat
     class LineItemSerializer < ActiveModel::Serializer
       attributes :id, :product_id, :name, :quantity, :price, :weight, :height, :width, :depth,
-      :promotional_item, :image_small_url, :product_url
+      :promotional_item, :image_url, :product_url
 
       def product_id
         object.variant.sku
@@ -34,7 +34,7 @@ module Spree
         object.variant.depth
       end
 
-      def image_small_url
+      def image_url
         (object.variant.images + object.variant.product.images).first.try(:attachment,:small)
       end
 
