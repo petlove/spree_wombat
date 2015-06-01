@@ -3,7 +3,7 @@ require 'active_model/serializer'
 module Spree
   module Wombat
     class ShipmentSerializer < ActiveModel::Serializer
-      attributes :id, :order_id, :email, :cost, :status, :stock_location,
+      attributes :id, :order_id, :email, :document_number, :cost, :status, :stock_location,
                 :shipping_method, :tracking, :placed_on, :shipped_at, :totals,
                 :updated_at, :channel, :items, :selected_shipping_rate,
                 :order_status, :order_payment_status, :order_paid, :order_invoice
@@ -21,6 +21,10 @@ module Spree
 
       def email
         object.order.email
+      end
+
+      def document_number
+        object.order.document_number
       end
 
       def channel
