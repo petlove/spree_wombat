@@ -157,7 +157,7 @@ module Spree
 
         let(:variant) { create(:product).master }
         # let(:images) { message["product"]["images"]}
-        let(:images) { [{"url" => 'http://placehold.it/1000x1000', "position" => 0, "title" => 'test 1000x1000' }] }
+        let(:images) { [{"url" => 'http://dummyimage.com/1000x1000', "position" => 0, "title" => 'test 1000x1000' }] }
 
         context "with empty images" do
           let(:images) {[]}
@@ -183,8 +183,8 @@ module Spree
         context "with 2 images with the same url" do
           let(:images) {
             [
-              {"url" => 'http://placehold.it/1000x1000', "position" => 0, "title" => 'test 1000x1000' },
-              {"url" => 'http://placehold.it/1000x1000', "position" => 1, "title" => 'test 2 1000x1000' }
+              {"url" => 'http://dummyimage.com/1000x1000', "position" => 0, "title" => 'test 1000x1000' },
+              {"url" => 'http://dummyimage.com/1000x1000', "position" => 1, "title" => 'test 2 1000x1000' }
             ]
           }
 
@@ -282,7 +282,7 @@ module Spree
           let(:message) do
             hsh = ::Hub::Samples::Product.request
             hsh["product"].delete("variants")
-            hsh["product"]["images"] = [{"url" => 'http://placehold.it/1000x1000.jpg', "position" => 0, "title" => 'test 1000x1000' }]
+            hsh["product"]["images"] = [{"url" => 'http://dummyimage.com/1000x1000', "position" => 0, "title" => 'test 1000x1000' }]
             hsh
           end
           let(:handler) { Handler::AddProductHandler.new(message.to_json) }
@@ -333,8 +333,8 @@ module Spree
         context "product with children" do
           let(:message) {
             hsh = ::Hub::Samples::Product.request
-            hsh["product"]["images"] = [{"url" => 'http://placehold.it/1000x1000.jpg', "position" => 0, "title" => 'test 1000x1000' }]
-            hsh["product"]["variants"][0]["images"] = [{"url" => 'http://placehold.it/800x800.jpg', "position" => 0, "title" => 'test 800x800' }]
+            hsh["product"]["images"] = [{"url" => 'http://dummyimage.com/1000x1000', "position" => 0, "title" => 'test 1000x1000' }]
+            hsh["product"]["variants"][0]["images"] = [{"url" => 'http://dummyimage.com/800x800', "position" => 0, "title" => 'test 800x800' }]
             hsh
           }
           let(:handler) { Handler::AddProductHandler.new(message.to_json) }
@@ -367,8 +367,8 @@ module Spree
             let(:message) do
               msg = ::Hub::Samples::Product.request
               msg["product"].delete("options")
-              msg["product"]["images"] = [{"url" => 'http://placehold.it/1000x1000.jpg', "position" => 0, "title" => 'test 1000x1000' }]
-              msg["product"]["variants"][0]["images"] = [{"url" => 'http://placehold.it/800x800.jpg', "position" => 0, "title" => 'test 800x800' }]
+              msg["product"]["images"] = [{"url" => 'http://dummyimage.com/1000x1000', "position" => 0, "title" => 'test 1000x1000' }]
+              msg["product"]["variants"][0]["images"] = [{"url" => 'http://dummyimage.com/800x800', "position" => 0, "title" => 'test 800x800' }]
               msg
             end
 

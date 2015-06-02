@@ -46,8 +46,8 @@ module Spree
         let!(:message) do
           hsh = ::Hub::Samples::Product.request
           hsh["product"]["permalink"] = "other-permalink-then-name"
-          hsh["product"]["images"] = [{"url" => 'http://placehold.it/1000x1000.jpg', "position" => 0, "title" => 'test 1000x1000' }]
-          hsh["product"]["variants"][0]["images"] = [{"url" => 'http://placehold.it/800x800.jpg', "position" => 0, "title" => 'test 800x800' }]
+          hsh["product"]["images"] = [{"url" => 'http://dummyimage.com/1000x1000', "position" => 0, "title" => 'test 1000x1000' }]
+          hsh["product"]["variants"][0]["images"] = [{"url" => 'http://dummyimage.com/800x800', "position" => 0, "title" => 'test 800x800' }]
           hsh
         end
 
@@ -84,22 +84,22 @@ module Spree
         context "and regarding taxons" do
           let(:message_without_taxons) do
             message["product"].delete("taxons")
-            message["product"]["images"] = [{"url" => 'http://placehold.it/1000x1000.jpg', "position" => 0, "title" => 'test 1000x1000' }]
-            message["product"]["variants"][0]["images"] = [{"url" => 'http://placehold.it/800x800.jpg', "position" => 0, "title" => 'test 800x800' }]
+            message["product"]["images"] = [{"url" => 'http://dummyimage.com/1000x1000', "position" => 0, "title" => 'test 1000x1000' }]
+            message["product"]["variants"][0]["images"] = [{"url" => 'http://dummyimage.com/800x800', "position" => 0, "title" => 'test 800x800' }]
             message
           end
 
           let(:message_with_empty_taxons) do
             message["product"]["taxons"] = []
-            message["product"]["images"] = [{"url" => 'http://placehold.it/1000x1000.jpg', "position" => 0, "title" => 'test 1000x1000' }]
-            message["product"]["variants"][0]["images"] = [{"url" => 'http://placehold.it/800x800.jpg', "position" => 0, "title" => 'test 800x800' }]
+            message["product"]["images"] = [{"url" => 'http://dummyimage.com/1000x1000', "position" => 0, "title" => 'test 1000x1000' }]
+            message["product"]["variants"][0]["images"] = [{"url" => 'http://dummyimage.com/800x800', "position" => 0, "title" => 'test 800x800' }]
             message
           end
 
           let(:message_with_different_taxons) do
             message["product"]["taxons"] = [["Categories", "Scuba Gear"], ["Brands", "Scuba"]]
-            message["product"]["images"] = [{"url" => 'http://placehold.it/1000x1000.jpg', "position" => 0, "title" => 'test 1000x1000' }]
-            message["product"]["variants"][0]["images"] = [{"url" => 'http://placehold.it/800x800.jpg', "position" => 0, "title" => 'test 800x800' }]
+            message["product"]["images"] = [{"url" => 'http://dummyimage.com/1000x1000', "position" => 0, "title" => 'test 1000x1000' }]
+            message["product"]["variants"][0]["images"] = [{"url" => 'http://dummyimage.com/800x800', "position" => 0, "title" => 'test 800x800' }]
             message
           end
 
