@@ -27,15 +27,15 @@ module Spree
       end
 
       def height
-        object.variant.height.round(4).to_f
+        object.variant.height.to_f
       end
 
       def width
-        object.variant.width.round(4).to_f
+        object.variant.width.to_f
       end
 
       def depth
-        object.variant.depth.round(4).to_f
+        object.variant.depth.to_f
       end
 
       def promotional_item
