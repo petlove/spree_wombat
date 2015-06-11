@@ -134,6 +134,7 @@ module Spree
             # parent_taxon > Clothes > T-Shirts
             it "will nest the taxons inside each other" do
               handler.add_taxon(parent, taxon_names)
+              parent.reload
               expect(parent.children.count).to eql 1
               expect(parent.descendants.count).to eql 2
               expect(parent.leaves.count).to eql 1
@@ -142,7 +143,7 @@ module Spree
 
           context "with same taxon already existing" do
             before do
-              taxonomy.root.children << create(:taxon, name: "Clothes")
+              create(:taxon, name: "Clothes", parent_id: taxonomy.root.id, taxonomy_id: taxonomy.id)
             end
             it "will only add missing taxons" do
               expect{handler.add_taxon(parent, taxon_names)}.to change{Spree::Taxon.count}.by(1)

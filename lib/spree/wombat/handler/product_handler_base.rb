@@ -87,13 +87,10 @@ module Spree
         def add_taxon(parent, taxon_names, position = 0)
           return unless taxon_names.present?
           taxon_name = taxon_names.shift
-          taxon = Spree::Taxon.where(name: taxon_name, parent_id: parent.id).first
-          if taxon
-            parent.children << taxon
-          else
-            taxon = parent.children.create!(name: taxon_name, position: position, taxonomy_id: parent.taxonomy_id)
+          taxon = Spree::Taxon.where(name: taxon_name, parent_id: parent.id, taxonomy_id: parent.taxonomy_id).first_or_initialize do |t|
+            t.position = position
           end
-          parent.save
+          taxon.save
           # store the taxon so we can assign it later
           @taxon_ids << taxon.id
           add_taxon(taxon, taxon_names, position + 1)
