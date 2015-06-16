@@ -13,7 +13,7 @@ module Spree
           variant = Spree::Variant.find_by(sku: sku) || Spree::Variant.unscoped.find_by(sku: sku)
           return response("Product with SKU #{sku} was not found", 500) unless variant
 
-          stock_item = Spree::StockItem.find_by(stock_location: stock_location, variant: variant) || Spree::StockItem.unscoped.find_by(stock_location: stock_location, variant: variant) unless stock_item
+          stock_item = Spree::StockItem.find_by(stock_location: stock_location, variant: variant) || Spree::StockItem.unscoped.find_by(stock_location: stock_location, variant: variant)
           return response("Stock location '#{stock_location_name}' does not have any stock_items for #{sku}", 500) unless stock_item
 
           count_on_hand = stock_item.count_on_hand
