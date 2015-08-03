@@ -43,8 +43,8 @@ module Spree
         object.channel || 'spree'
       end
 
-      def sub_channel
-        'store'
+      def subchannel
+        object.subchannel || 'store'
       end
 
       def updated_at
