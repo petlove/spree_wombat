@@ -31,6 +31,14 @@ module Spree
         object.state
       end
 
+      def payment_status
+        object.payment_state
+      end
+
+      def shipment_status
+        object.shipment_state
+      end
+
       def channel
         object.channel || 'spree'
       end
