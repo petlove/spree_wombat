@@ -37,7 +37,7 @@ module Spree
 
             it "returns a Wombat::Responder with 500 status" do
               responder = handler.process
-              expect(responder.summary).to  match /Order with number R.{9}, with state \w+, could not be canceled/
+              expect(responder.summary).to  match /Order with number R.{9} could not be canceled/
               expect(responder.code).to eql 500
             end
           end
