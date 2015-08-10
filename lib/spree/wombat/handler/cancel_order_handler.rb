@@ -4,9 +4,9 @@ module Spree
       class CancelOrderHandler < OrderHandlerBase
 
         def process
-          return response("Invalid status: #{@payload[:order][:status]}", 500) unless @payload[:order][:status] == 'erp_canceled'
-
           order_number = @payload[:order][:id]
+          return response("Invalid status: #{@payload[:order][:status]} for order with number #{order_number}", 500) unless @payload[:order][:status] == 'erp_canceled'
+
           order = Spree::Order.lock(true).find_by(number: order_number)
           return response("Order with number #{order_number} was not found", 500) unless order
           return response("Order already canceled", 200) if order.canceled?
