@@ -12,7 +12,7 @@ module Spree
       end
 
       def payment_method
-        object.payment_method.name
+        object.payment_method.try(:name)
       end
 
       def status
