@@ -56,7 +56,7 @@ module Spree
       end
 
       def stock_location
-        object.stock_location.slice(:name, :zipcode)
+        object.stock_location.slice(:name, :zipcode) if object.stock_location
       end
 
       def shipping_method
@@ -68,11 +68,7 @@ module Spree
       end
 
       def placed_on
-        if object.order.completed_at?
-          object.order.completed_at.getutc.try(:iso8601)
-        else
-          ''
-        end
+        object.order.completed_at? ? object.order.completed_at.getutc.try(:iso8601) : ''
       end
 
       def shipped_at

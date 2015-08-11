@@ -19,11 +19,11 @@ module Spree
       end
 
       def price
-        object.line_item.price.round(2).to_f
+        object.line_item.try(:price).to_f.round(2)
       end
 
       def weight
-        object.variant.weight.round(4).to_f
+        object.variant.weight.to_f.round(4)
       end
 
       def height
