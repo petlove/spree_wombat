@@ -7,7 +7,7 @@ module Spree
     preference :push_objects, :array, :default => ["Spree::Order", "Spree::Product"]
     preference :payload_builder, :hash, :default => {
       "Spree::Order" => {:serializer => "Spree::Wombat::OrderSerializer", :root => "orders", :filter => "complete"},
-      "Spree::Product" => {:serializer => "Spree::Wombat::ProductSerializer", :root => "products"},
+      "Spree::Product" => {:serializer => "Spree::Wombat::ProductSerializer", :root => "products"}
     }
     preference :last_pushed_timestamps, :hash, :default => {
       "Spree::Order" => nil,
