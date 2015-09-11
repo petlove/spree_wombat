@@ -5,7 +5,7 @@ module Spree
     class OrderSerializer < ActiveModel::Serializer
       attributes :id, :status, :payment_status, :shipment_status, :channel, :email, :currency, :placed_on,
                  :updated_at, :totals, :adjustments, :selected_shipping_rate, :guest_token,
-                 :shipping_instructions, :document_number, :paid
+                 :shipping_instructions, :document_number, :paid, :paid_at
 
       has_many :line_items,  serializer: Spree::Wombat::LineItemSerializer
       has_many :payments, serializer: Spree::Wombat::PaymentSerializer
@@ -61,6 +61,11 @@ module Spree
 
       def paid
         object.paid?
+      end
+
+      def paid_at
+        return nil if object.payments.completed.empty?
+        object.payments.completed.last.updated_at.getutc.try(:iso8601)
       end
 
       def totals
