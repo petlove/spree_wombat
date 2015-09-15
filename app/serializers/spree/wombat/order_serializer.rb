@@ -44,12 +44,12 @@ module Spree
       end
 
       def subchannel
-        object.subchannel || 'store'
+        object.try(:subchannel) || 'store'
       end
 
       def updated_at
         object.updated_at.getutc.try(:iso8601)
-      end
+      end 
 
       def placed_on
         if object.completed_at?
