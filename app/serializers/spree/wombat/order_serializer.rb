@@ -3,9 +3,9 @@ require 'active_model/serializer'
 module Spree
   module Wombat
     class OrderSerializer < ActiveModel::Serializer
-      attributes :id, :status, :payment_status, :shipment_status, :channel, :email, :currency, :placed_on,
-                 :updated_at, :totals, :adjustments, :selected_shipping_rate, :guest_token,
-                 :shipping_instructions, :document_number, :paid, :paid_at
+      attributes :id, :status, :payment_status, :shipment_status, :channel, :subchannel, :email, :document_number, 
+                 :currency, :paid, :paid_at, :placed_on, :updated_at, :totals, :adjustments,
+                 :selected_shipping_rate, :shipping_instructions, :guest_token
 
       has_many :line_items,  serializer: Spree::Wombat::LineItemSerializer
       has_many :payments, serializer: Spree::Wombat::PaymentSerializer
