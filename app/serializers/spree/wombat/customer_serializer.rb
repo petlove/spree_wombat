@@ -5,7 +5,8 @@ module Spree
     class CustomerSerializer < ActiveModel::Serializer
 
       attributes :id,:email, :firstname, :lastname, :document_number, :creation_date, :city, :state,
-                 :neighborhood, :zipcode, :birth_date, :phone, :newsletter_opt_in, :orders_count
+                 :neighborhood, :zipcode, :birth_date, :phone, :newsletter_opt_in, :facebook_opt_in,
+                 :sms_opt_in, :push_opt_in, :orders_count
 
       has_many :pets,  serializer: Spree::Wombat::PetSerializer
 
