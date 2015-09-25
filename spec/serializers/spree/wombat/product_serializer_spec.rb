@@ -112,8 +112,8 @@ module Spree
 
         context "without variants" do
           it "returns master variant in 'variants' key" do
-            master_product = {"sku"=>product.master.sku, "price"=>19.99, "cost_price"=>17.0, "options"=>{}, "weight"=>"0.0", "height"=>"1.0", "width"=>"1.0", "depth"=>"1.0", "name" => nil, "short_name" => nil, "images"=>[]}
-            expect(serialized_product["variants"]).to eql [master_product]
+            master_product = {"sku"=>product.master.sku, "price"=>19.99, "cost_price"=>17.0, "list_price"=>0.0, "options"=>{}, "weight"=>"0.0", "height"=>"1.0", "width"=>"1.0", "depth"=>"1.0", "name" => nil, "short_name" => nil, "stock"=>0, "image_url"=>nil, "servings_per_container"=>nil, "images"=>[]}
+            expect(serialized_product["store_variants"]).to eql [master_product]
           end
         end
 
@@ -122,7 +122,7 @@ module Spree
           let!(:variant) { create(:variant, product: product) }
           it "serialized the variant and master as nested objects" do
             product.reload
-            expect(serialized_product["variants"].count).to eql 1
+            expect(serialized_product["store_variants"].count).to eql 1
           end
         end
       end

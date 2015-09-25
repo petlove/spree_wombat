@@ -7,7 +7,8 @@ module Spree
       attributes :id, :name, :sku, :description, :price, :list_price, :cost_price,
                  :available_on, :permalink, :meta_description, :meta_keywords,
                  :shipping_category, :taxons, :options, :weight, :height, :width,
-                 :depth, :variants
+                 :depth, :store_variants, :url, :brand, :department, :category, :subcategory,
+                 :average_serving_size, :properties
 
       has_many :images, serializer: Spree::Wombat::ImageSerializer
 
@@ -35,6 +36,30 @@ module Spree
         object.slug
       end
 
+      def url
+        "http://www.petlove.com.br/%s/p" % object.slug
+      end
+
+      def brand
+        object.send(:brand).try(:name) if object.respond_to?(:brand)
+      end
+
+      def department
+        object.send(:department).try(:name) if object.respond_to?(:department)
+      end
+
+      def category
+        object.send(:category).try(:name) if object.respond_to?(:category)
+      end
+
+      def subcategory
+        object.send(:sub_category).try(:name) if object.respond_to?(:sub_category)
+      end
+
+      def average_serving_size
+        object.try :average_serving_size
+      end
+
       def shipping_category
         object.shipping_category.name
       end
@@ -47,7 +72,11 @@ module Spree
         object.option_types.pluck(:name)
       end
 
-      def variants
+      def properties
+        object.try(:properties)
+      end
+
+      def store_variants
         if object.variants.empty?
           [Spree::Wombat::VariantSerializer.new(object.master, root:false)]
         else
