@@ -8,7 +8,7 @@ module Spree
                  :available_on, :permalink, :meta_description, :meta_keywords,
                  :shipping_category, :taxons, :options, :weight, :height, :width,
                  :depth, :store_variants, :url, :brand, :department, :category, :subcategory,
-                 :average_serving_size, :properties
+                 :average_serving_size, :properties, :product_properties, :store_properties
 
       has_many :images, serializer: Spree::Wombat::ImageSerializer
 
@@ -41,7 +41,7 @@ module Spree
       end
 
       def brand
-        object.send(:brand).try(:name) if object.respond_to?(:brand)
+        object.send(:brand).to_h[:name] if object.respond_to?(:brand)
       end
 
       def department
@@ -74,6 +74,20 @@ module Spree
 
       def properties
         object.try(:properties)
+      end
+
+      def product_properties
+        object.try(:product_properties)
+      end
+
+      def store_properties
+        object.try(:product_properties).map do |pp|
+          {
+            name: pp.property.name,
+            presentation: pp.property.presentation,
+            value: pp.value
+          }
+        end
       end
 
       def store_variants
