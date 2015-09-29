@@ -29,7 +29,7 @@ module Spree
       def add_host_prefix(url)
         return url unless ActionController::Base.asset_host
         dynamic_asset_host = ActionController::Base.asset_host =~ /\%d/ ? ActionController::Base.asset_host % rand(4) : ActionController::Base.asset_host
-        protocol = ActionController::Base.asset_host =~ /\A\/\// ? 'https' : ''
+        protocol = ActionController::Base.asset_host =~ /\A\/\// ? 'https:' : ''
         URI.join(protocol, dynamic_asset_host, url).to_s
       end
 
