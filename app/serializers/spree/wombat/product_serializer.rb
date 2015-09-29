@@ -6,7 +6,7 @@ module Spree
 
       attributes :id, :name, :sku, :description, :price, :list_price, :cost_price,
                  :available_on, :permalink, :meta_description, :meta_keywords,
-                 :shipping_category, :taxons, :options, :weight, :height, :width,
+                 :shipping_category, :taxons, :store_options, :weight, :height, :width,
                  :depth, :store_variants, :url, :brand, :department, :category, :subcategory,
                  :average_serving_size, :properties, :product_properties, :store_properties
 
@@ -68,7 +68,7 @@ module Spree
         object.taxons.collect {|t| t.self_and_ancestors.collect(&:name)}
       end
 
-      def options
+      def store_options
         object.option_types.pluck(:name)
       end
 
