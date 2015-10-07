@@ -8,7 +8,8 @@ module Spree
                  :available_on, :permalink, :meta_description, :meta_keywords,
                  :shipping_category, :taxons, :store_options, :weight, :height, :width,
                  :depth, :store_variants, :url, :brand, :department, :category, :subcategory,
-                 :average_serving_size, :properties, :product_properties, :store_properties
+                 :average_serving_size, :store_properties
+                 # :properties, :product_properties
 
       has_many :images, serializer: Spree::Wombat::ImageSerializer
 
@@ -72,13 +73,13 @@ module Spree
         object.option_types.pluck(:name)
       end
 
-      def properties
-        object.try(:properties)
-      end
+      # def properties
+      #   object.try(:properties)
+      # end
 
-      def product_properties
-        object.try(:product_properties)
-      end
+      # def product_properties
+      #   object.try(:product_properties)
+      # end
 
       def store_properties
         object.try(:product_properties).map do |pp|

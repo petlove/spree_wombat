@@ -21,7 +21,7 @@ module Spree
       end
 
       def stock
-        object.try(:count_on_hand).to_i
+        object.try(:total_on_hand).to_i
       end
 
       def image_url
