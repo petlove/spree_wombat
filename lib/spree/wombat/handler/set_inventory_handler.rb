@@ -19,10 +19,10 @@ module Spree
           return response("Stock location '#{stock_location_name}' does not have any stock_items for #{sku}", 500) unless stock_item
           subscription_stock_item = Spree::StockItem.find_by(stock_location: subscription_stock_location, variant: variant)
 
-          count_on_hand = stock_item.try :count_on_hand
-          subscription_count_on_hand = subscription_stock_item.try :count_on_hand
+          count_on_hand = stock_item.count_on_hand
+          subscription_count_on_hand = subscription_stock_item.try(:count_on_hand).to_i
 
-          stock_item.set_count_on_hand(@payload[:inventory][:quantity] - subscription_count_on_hand.to_i)
+          stock_item.set_count_on_hand(@payload[:inventory][:quantity] - subscription_count_on_hand)
 
           msg = "Set inventory for #{sku} at #{stock_location_name} from #{count_on_hand} to "
           msg += "#{@payload[:inventory][:quantity]} - #{subscription_count_on_hand} = " if subscription_stock_location && subscription_stock_item
