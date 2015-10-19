@@ -3,11 +3,11 @@ module Spree
     module Handler
       class SetPriceHandler < Base
         def process
-          sku_id = @payload[:price].delete(:product_id)
-          variant = Spree::Variant.find_by(vtex_sku_id: sku_id)
-          return response("Product with VTEX SKU ID #{sku_id} was not found", 500) unless variant
+          sku = @payload[:price][:sku]
+          variant = Spree::Variant.find_by(sku: sku)
+          return response("Product with sku #{sku} was not found", 500) unless variant
 
-          updatable_columns = @payload[:price].slice *Spree::Variant.attribute_names.select{|n| n =~ /price/i }.concat(["price"])
+          updatable_columns = @payload[:price].slice(:price)
           return response("Missing price information", 500) unless updatable_columns[:price]
 
           current_price = variant.price
