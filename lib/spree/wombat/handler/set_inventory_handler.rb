@@ -5,7 +5,7 @@ module Spree
 
         def process
           stock_location_name = @payload[:inventory][:location]
-          subscription_stock_location_name = "#{stock_location_name}-subscription"
+          subscription_stock_location_name = "#{stock_location_name}_subscription"
           sku = @payload[:inventory][:product_id]
 
           stock_location = Spree::StockLocation.find_by(name: stock_location_name) || Spree::StockLocation.find_by(admin_name: stock_location_name)
