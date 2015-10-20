@@ -70,14 +70,14 @@ module Spree
 
         context "without options" do
           it "returns [] for 'options'" do
-            expect(serialized_product["options"]).to eql []
+            expect(serialized_product["store_options"]).to eql []
           end
         end
 
         context "options" do
           let(:product) { create(:product_with_option_types) }
           it "returns an array with the option_types" do
-            expect(serialized_product["options"]).to eql ["foo-size"]
+            expect(serialized_product["store_options"]).to eql ["foo-size"]
           end
         end
 

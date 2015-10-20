@@ -10,8 +10,8 @@ module Spree
         let(:handler) { Handler::UpdateOrderHandler.new(message.to_json) }
 
         context "for existing order" do
-          let!(:message) { ::Hub::Samples::Order.request.merge(invoice: { key: '123456' }) }
-          let!(:order) { create(:order_with_line_items, number: message["order"]["id"])}
+          let!(:message) { ::Hub::Samples::Order.request }
+          let!(:order) { create(:order_with_line_items, number: message["order"]["id"]) }
 
           it "will update the order" do
             email = order.email

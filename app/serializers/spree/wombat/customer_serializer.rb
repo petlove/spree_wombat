@@ -15,6 +15,18 @@ module Spree
         object.email
       end
 
+      def firstname
+        object.try :firstname
+      end
+
+      def lastname
+        object.try :lastname
+      end
+
+      def document_number
+        object.try :document_number
+      end
+
       def creation_date
         object.created_at.strftime("%F %R")
       end
@@ -40,8 +52,28 @@ module Spree
       end
 
       def birth_date
-        object.birth_date ? object.birth_date.strftime("%F %R") : nil
-      end 
+        object.try(:birth_date) ? object.birth_date.strftime("%F %R") : nil
+      end
+
+      def phone
+        object.try :phone
+      end
+
+      def newsletter_opt_in
+        object.try :newsletter_opt_in
+      end
+
+      def facebook_opt_in
+        object.try :facebook_opt_in
+      end
+
+      def sms_opt_in
+        object.try :sms_opt_in
+      end
+
+      def push_opt_in
+        object.try :push_opt_in
+      end
 
       def orders_count
         object.orders.where.not(completed_at: nil).count
