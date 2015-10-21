@@ -25,9 +25,8 @@ module Spree
 
           stock_item.set_count_on_hand(quantity - subscription_count_on_hand)
 
-          msg = "Set inventory for #{sku} at #{stock_location_name} from #{count_on_hand} to "
-          msg += "#{quantity} - #{subscription_count_on_hand} = " if subscription_stock_location && subscription_stock_item
-          msg += "#{stock_item.reload.count_on_hand}"
+          msg = "Set inventory for #{sku} at #{stock_location_name} from #{count_on_hand} to #{stock_item.reload.count_on_hand}"
+          msg += " (#{quantity} - #{subscription_count_on_hand} = #{stock_item.reload.count_on_hand})" if subscription_stock_location && subscription_stock_item
 
           response(msg)
         end
