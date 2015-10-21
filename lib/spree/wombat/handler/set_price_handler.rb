@@ -18,7 +18,7 @@ module Spree
           end
           variant.reload
 
-          return response("Set price for #{sku_id} from #{current_price} #{current_currency} to #{variant.price} #{variant.currency}")
+          return response("Set price for #{sku} from #{current_price} #{current_currency} to #{variant.price} #{variant.currency}")
         end
       end
     end
