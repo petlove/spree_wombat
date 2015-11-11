@@ -13,16 +13,16 @@ module Spree
           shipping_adjustment = nil
           tax_adjustment = nil
 
-          unless order_params["shipments_attributes"].present?
+          unless order_params[:shipments_attributes].present?
             # remove possible shipment adjustment here
-            order_params["adjustments_attributes"].each do |adjustment|
+            order_params[:adjustments_attributes].each do |adjustment|
               adjustment_attrs << adjustment unless adjustment["label"].downcase == "shipping"
               shipping_adjustment = adjustment if adjustment["label"].downcase == "shipping"
             end
           end
 
-          order_params["adjustments_attributes"] = adjustment_attrs if adjustment_attrs.present?
-          order = Spree::Core::Importer::Order.import(find_spree_user,order_params)
+          order_params[:adjustments_attributes] = adjustment_attrs if adjustment_attrs.present?
+          order = Spree::Core::Importer::Order.import(find_spree_user, order_params)
           order.reload
 
           number_of_shipments_created = order.shipments.count

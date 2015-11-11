@@ -18,15 +18,31 @@ module Spree
       end
 
       def list_price
-        object.list_price.to_f
+        object.list_price.to_f.round(2)
       end
 
       def price
-        object.price.to_f
+        object.price.to_f.round(2)
       end
 
       def cost_price
-        object.cost_price.to_f
+        object.cost_price.to_f.round(2)
+      end
+
+      def weight
+        object.weight.to_f.round(4)
+      end
+
+      def height
+        object.height.to_f.round(3)
+      end
+
+      def width
+        object.width.to_f.round(3)
+      end
+
+      def depth
+        object.depth.to_f.round(3)
       end
 
       def available_on
@@ -72,14 +88,6 @@ module Spree
       def store_options
         object.option_types.pluck(:name)
       end
-
-      # def properties
-      #   object.try(:properties)
-      # end
-
-      # def product_properties
-      #   object.try(:product_properties)
-      # end
 
       def store_properties
         object.try(:product_properties).map do |pp|

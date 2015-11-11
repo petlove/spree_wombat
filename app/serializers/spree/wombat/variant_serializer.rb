@@ -20,6 +20,22 @@ module Spree
         object.list_price.to_f
       end
 
+      def weight
+        object.weight.to_f.round(4)
+      end
+
+      def height
+        object.height.to_f.round(3)
+      end
+
+      def width
+        object.width.to_f.round(3)
+      end
+
+      def depth
+        object.depth.to_f.round(3)
+      end
+
       def stock
         object.try(:total_on_hand).to_i
       end
@@ -33,7 +49,7 @@ module Spree
       end
 
       def options
-        object.option_values.each_with_object({}) {|ov,h| h[ov.option_type.presentation]= ov.presentation}
+        object.option_values.each_with_object({}) { |ov,h| h[ov.option_type.presentation]= ov.presentation }
       end
 
     end
