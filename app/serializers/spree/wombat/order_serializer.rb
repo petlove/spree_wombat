@@ -3,14 +3,12 @@ require 'active_model/serializer'
 module Spree
   module Wombat
     class OrderSerializer < ActiveModel::Serializer
-      attributes :id, :status, :payment_status, :shipment_status, :channel, :subchannel, :email, :document_number, 
+      attributes :id, :status, :payment_status, :shipment_status, :channel, :subchannel, :email, :document_number,
                  :currency, :paid, :paid_at, :placed_on, :updated_at, :totals, :adjustments,
                  :selected_shipping_rate, :shipping_instructions, :guest_token
 
       has_many :line_items,  serializer: Spree::Wombat::LineItemSerializer
       has_many :payments, serializer: Spree::Wombat::PaymentSerializer
-
-      has_many :shipments, serializer: Spree::Wombat::ShipmentSerializer
 
       has_one :shipping_address, serializer: Spree::Wombat::AddressSerializer
       has_one :billing_address, serializer: Spree::Wombat::AddressSerializer
@@ -49,7 +47,7 @@ module Spree
 
       def updated_at
         object.updated_at.getutc.try(:iso8601)
-      end 
+      end
 
       def placed_on
         if object.completed_at?
