@@ -5,7 +5,7 @@ module Spree
     class VariantSerializer < ActiveModel::Serializer
 
       attributes :sku, :price, :cost_price, :list_price, :options, :weight, :height, :width, :depth,
-                 :name, :short_name, :stock, :image_url, :servings_per_container
+                 :name, :short_name, :stock, :product_image_url, :image_url, :servings_per_container
       has_many :images, serializer: Spree::Wombat::ImageSerializer
 
       def price
@@ -42,6 +42,10 @@ module Spree
 
       def image_url
         (object.images + object.product.images).first.try(:attachment,:small)
+      end
+
+      def product_image_url
+        (object.images + object.product.images).first.try(:attachment,:product)
       end
 
       def servings_per_container
