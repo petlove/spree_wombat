@@ -22,7 +22,7 @@ module Spree
       end
 
       def document_number
-        object.document_number
+        object.document_number || object.user.document_number
       end
 
       def status
